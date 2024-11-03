@@ -1,1 +1,2 @@
-book_1984.delete()
+book.delete 
+from bookshelf.models import Book
