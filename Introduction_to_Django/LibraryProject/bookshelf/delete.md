@@ -1,2 +1,1 @@
-book.delete()
-# Expected output: Book deleted
+book_1984.delete()
