@@ -1,7 +1,10 @@
-all_book = Book.objects.get(title='1984')
--> The above command is used to retrieve all the book instance created.
+book = Book.objects.get(title="1984")
+book.title, book.author, book.publication_year
 
-for book in all_book:
-    print(f'{book.title}, {book.author}, {book.publication_year}')
+# Retrieve Book Instance
+```python
+book = Book.objects.get(title="1984")
+book.title, book.author, book.publication_year
+# Expected Output:
+# ('1984', 'George Orwell', 1949)
 
--> The for loop is used to iterate all the book instance created and print them one by one separately.
