@@ -1,16 +1,21 @@
-
+# bookshelf/forms.py
 
 from django import forms
-from .models import Book
 
-class BookForm(forms.ModelForm):
-    class Meta:
-        model = Book
-        fields = ['title', 'author', 'published_date', 'isbn', 'summary']
-
-    # Example: Custom Validation for ISBN
-    def clean_isbn(self):
-        isbn = self.cleaned_data.get('isbn')
-        if len(isbn) != 13:
-            raise forms.ValidationError("ISBN must be 13 characters long.")
-        return isbn
+class ExampleForm(forms.Form):
+    """
+    A simple example form for demonstration purposes.
+    """
+    name = forms.CharField(max_length=100, required=True, widget=forms.TextInput(attrs={
+        'placeholder': 'Enter your name',
+        'class': 'form-control'
+    }))
+    email = forms.EmailField(required=True, widget=forms.EmailInput(attrs={
+        'placeholder': 'Enter your email',
+        'class': 'form-control'
+    }))
+    message = forms.CharField(widget=forms.Textarea(attrs={
+        'placeholder': 'Write your message here',
+        'rows': 4,
+        'class': 'form-control'
+    }))
