@@ -128,4 +128,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 ["rest_framework.authentication.TokenAuthentication"]
 
+<<<<<<< HEAD
 ["rest_framework.permissions.IsAuthenticated"]
+=======
+["rest_framework.permissions.IsAuthenticated"]
+
+>>>>>>> 8bf33efe490108060f33c3f0a5837c57f43ea307
