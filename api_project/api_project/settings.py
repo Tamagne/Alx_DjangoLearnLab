@@ -126,4 +126,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 ["rest_framework.authtoken"]
 
+["rest_framework.authentication.TokenAuthentication"]
+
 
