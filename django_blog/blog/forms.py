@@ -1,6 +1,7 @@
 # blog/forms.py
 from django import forms
 from .models import Post
+from taggit.forms import TagWidget
 
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -21,9 +22,15 @@ class CommentForm(forms.ModelForm):
         widgets = {
             'content': forms.Textarea(attrs={'rows': 4, 'placeholder': 'Add a comment...'})
         }
-from django import forms
 
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ['title', 'content', 'tags']  # Include tags
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['title', 'content', 'tags']
+        widgets = {
+            'tags': TagWidget(),  # Use TagWidget for the tags field
+        }
