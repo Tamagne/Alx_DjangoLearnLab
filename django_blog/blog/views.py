@@ -147,3 +147,18 @@ def delete_comment(request, comment_id):
     if comment.author == request.user:
         comment.delete()
     return redirect('post_detail', post_id=comment.post.id)
+
+
+
+class CommentCreateView(CreateView):
+    model = Comment
+    form_class = CommentForm
+    template_name = 'blog/add_comment.html'
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        form.instance.post_id = self.kwargs['post_id']
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('post_detail', kwargs={'post_id': self.kwargs['post_id']})
