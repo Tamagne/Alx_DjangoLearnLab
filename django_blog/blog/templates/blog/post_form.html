@@ -6,4 +6,12 @@
         {{ form.as_p }}
         <button type="submit">Save</button>
     </form>
+    {% for comment in post.comments.all %}
+    <p>{{ comment.author }} said: {{ comment.content }}</p>
+    {% if comment.author == user %}
+        <a href="{% url 'edit_comment' comment.id %}">Edit</a>
+        <a href="{% url 'delete_comment' comment.id %}">Delete</a>
+    {% endif %}
+{% endfor %}
+
 {% endblock %}
