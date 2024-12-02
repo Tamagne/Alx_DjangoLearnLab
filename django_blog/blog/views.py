@@ -162,3 +162,32 @@ class CommentCreateView(CreateView):
 
     def get_success_url(self):
         return reverse_lazy('post_detail', kwargs={'post_id': self.kwargs['post_id']})
+from django.views.generic.edit import UpdateView
+
+class CommentUpdateView(UpdateView):
+    model = Comment
+    form_class = CommentForm
+    template_name = 'blog/edit_comment.html'
+
+    def get_success_url(self):
+        return reverse_lazy('post_detail', kwargs={'post_id': self.object.post.id})
+from django.views.generic.edit import DeleteView
+
+class CommentDeleteView(DeleteView):
+    model = Comment
+    template_name = 'blog/delete_comment.html'
+    success_url = reverse_lazy('post_detail')
+
+from django import forms
+from .models import Comment
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content']
+
+    def clean_content(self):
+        content = self.cleaned_data.get('content')
+        if not content.strip():
+            raise forms.ValidationError("Content cannot be empty.")
+        return content
