@@ -45,28 +45,31 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',  # Authentication middleware
+    'django.contrib.messages.middleware.MessageMiddleware',  # Messages middleware
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
 
 ROOT_URLCONF = 'django_blog.urls'
 
 STATIC_URL = '/static/'
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'blog/templates'],
+        'DIRS': [BASE_DIR / 'templates'],  # Add your template directory if any
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
-                # other context processors
-                'django.template.context_processors.static',
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',  # Required for admin sidebar
+                'django.contrib.auth.context_processors.auth',  # Required for auth backend
+                'django.contrib.messages.context_processors.messages',  # Required for messages
             ],
         },
     },
 ]
+
 
 
 WSGI_APPLICATION = 'django_blog.wsgi.application'
