@@ -11,6 +11,10 @@ from django.urls import reverse_lazy
 
 from .models import Post, Comment
 from .forms import CommentForm
+from .forms import PostForm
+from django.db.models import Q
+from .models import Post
+
 
 def register(request):
     if request.method == 'POST':
@@ -205,3 +209,36 @@ def search_posts(request):
     else:
         posts = Post.objects.all()
     return render(request, 'blog/search_results.html', {'posts': posts})
+
+
+def create_post(request):
+    if request.method == "POST":
+        form = PostForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('post_list')  # Redirect to the list of posts
+    else:
+        form = PostForm()
+    return render(request, 'blog/post_form.html', {'form': form})
+
+
+
+def search_posts(request):
+    query = request.GET.get('q')
+    if query:
+        results = Post.objects.filter(
+            Q(title__icontains=query) |
+            Q(content__icontains=query) |
+            Q(tags__name__icontains=query)
+        ).distinct()
+    else:
+        results = Post.objects.none()
+
+    return render(request, 'blog/search_results.html', {'results': results, 'query': query})
+from taggit.models import Tag
+from .models import Post
+
+def posts_by_tag(request, tag_slug):
+    tag = get_object_or_404(Tag, slug=tag_slug)
+    posts = Post.objects.filter(tags__in=[tag])
+    return render(request, 'blog/posts_by_tag.html', {'tag': tag, 'posts': posts})

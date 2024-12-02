@@ -1,4 +1,5 @@
 from django.db import models
+from taggit.managers import TaggableManager
 
 # Create your models here.
 from django.db import models
@@ -29,9 +30,14 @@ class Tag(models.Model):
     def __str__(self):
         return self.name
 
+from django.db import models
+from taggit.managers import TaggableManager
+
 class Post(models.Model):
-    # existing fields...
-    tags = models.ManyToManyField(Tag, related_name='posts', blank=True)
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    tags = TaggableManager()  # Add tagging functionality
 
 class PostForm(forms.ModelForm):
     class Meta:
