@@ -23,3 +23,20 @@ class Comment(models.Model):
     def __str__(self):
         return f"Comment by {self.author.username} on {self.post.title}"
 
+class Tag(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.name
+
+class Post(models.Model):
+    # existing fields...
+    tags = models.ManyToManyField(Tag, related_name='posts', blank=True)
+
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['title', 'content', 'tags']
+        widgets = {
+            'tags': forms.CheckboxSelectMultiple(),
+        }

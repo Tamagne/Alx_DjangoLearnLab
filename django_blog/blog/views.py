@@ -191,3 +191,17 @@ class CommentForm(forms.ModelForm):
         if not content.strip():
             raise forms.ValidationError("Content cannot be empty.")
         return content
+
+
+from django.db.models import Q
+
+def search_posts(request):
+    query = request.GET.get('q', '')
+    if query:
+        posts = Post.objects.filter(
+            Q(title__icontains=query) | Q(content__icontains=query) |
+            Q(tags__name__icontains=query)
+        ).distinct()
+    else:
+        posts = Post.objects.all()
+    return render(request, 'blog/search_results.html', {'posts': posts})
